@@ -1,0 +1,40 @@
+version: '3.9'
+
+services:
+  front:
+    build:
+      context: .
+      dockerfile: docker/front/Dockerfile
+    volumes:
+      - ./front:/app
+    ports:
+      - "3030:3000"
+    environment:
+      - NODE_ENV=development
+    tty: true
+    container_name: info-front
+
+  # TODO: apiのdockerfile整備後に復活
+  # api:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/api/Dockerfile
+  #   volumes:
+  #     - ./api:/app
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     - NODE_ENV=development
+  #   container_name: info-api
+
+  #  db:
+  #    image: postgres:latest
+  #    volumes:
+  #      - ./db:/var/lib/postgresql/data
+  #    ports:
+  #      - "5432:5432"
+  #    environment:
+  #      - POSTGRES_USER=postgres
+  #      - POSTGRES_PASSWORD=postgres
+  #      - POSTGRES_DB=postgres
+  #    container_name: info-db
