@@ -19,7 +19,7 @@ return new class extends Migration
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
 
-            $table->enum('stance', ['positive', 'nutral', 'negative']);
+            $table->enum('stance', ['positive', 'neutral', 'negative']);
             $table->text('content');
 
             $table->softDeletesDatetime();
