@@ -10,7 +10,7 @@ Route::prefix('comments')->group(function () {
     Route::post('/', [CommentController::class, 'store']);
 
     // コメント数取得
-    Route::get('/numbers', [CommentController::class, 'getCommentNumbers']);
+    Route::get('/numbers/{newsId}', [CommentController::class, 'getCommentNumbers']);
 });
 
 Route::prefix('news')->group(function () {
