@@ -11,6 +11,8 @@ services:
       - NODE_ENV=development
     tty: true
     container_name: info-front
+    networks:
+      - app-network
 
   api:
     build:
@@ -39,9 +41,9 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_DATABASE: laravel
-      MYSQL_USER: laravel
-      MYSQL_PASSWORD: secret
+      MYSQL_DATABASE: info-db
+      MYSQL_USER: info-user
+      MYSQL_PASSWORD: password
       MYSQL_ROOT_PASSWORD: root
     container_name: info-db
     networks:
