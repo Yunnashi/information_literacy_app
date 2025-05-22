@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\GeminiController;
 use App\Http\Controllers\Api\NewsController;
-use App\Http\Controllers\Api\GeminiController;
 
 Route::prefix('comments')->group(function () {
     Route::get('/', [CommentController::class, 'index']);
@@ -28,4 +27,7 @@ Route::prefix('gemini')->group(function () {
     });
 });
 
-Route::get('/news/{newsId}/opinions', [GeminiController::class, 'getNewsOpinions']);
+Route::get('/gemini/news-summary/{newsId}', [GeminiController::class, 'getNewsSummary']);
+Route::get('/gemini/news-opinions/{newsId}', [GeminiController::class, 'getNewsOpinions']);
+
+Route::post('/gemini/prompt', [GeminiController::class, 'postPromptToGemini']);

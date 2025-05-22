@@ -25,9 +25,15 @@ class GeminiController extends Controller
 
         // Gemini APIにリクエストを送信
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . env('GEMINI_API_KEY'),
+            'Content-Type' => 'application/json',
         ])->post(env('GEMINI_API_URL'), [
-            'prompt' => $prompt,
+            'contents' => [
+                [
+                    'parts' => [
+                        ['text' => $prompt]
+                    ]
+                ]
+            ]
         ]);
 
         if ($response->failed()) {
@@ -54,9 +60,15 @@ class GeminiController extends Controller
         $responses = [];
         foreach ($prompts as $key => $prompt) {
             $response = Http::withHeaders([
-                'Authorization' => 'Bearer ' . env('GEMINI_API_KEY'),
+                'Content-Type' => 'application/json',
             ])->post(env('GEMINI_API_URL'), [
-                'prompt' => $prompt,
+                'contents' => [
+                    [
+                        'parts' => [
+                            ['text' => $prompt]
+                        ]
+                    ]
+                ]
             ]);
 
             if ($response->failed()) {
@@ -69,3 +81,40 @@ class GeminiController extends Controller
         // Gemini APIのレスポンスを返す
         return response()->json($responses);
     }
+
+    public function postPromptToGemini(Request $request): JsonResponse
+    {
+        $prompt = $request->input('prompt');
+
+        if (!$prompt) {
+            return response()->json(['error' => 'プロンプトが必要です'], 400);
+        }
+
+        $apiUrl = config('services.gemini.api_url');
+        $apiKey = config('services.gemini.api_key');
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+        ])->post($apiUrl, [
+            'contents' => [
+                [
+                    'parts' => [
+                        ['text' => $prompt]
+                    ]
+                ]
+            ]
+        ]);
+
+        if ($response->failed()) {
+            // レスポンスの詳細を返す
+            return response()->json([
+                'error' => 'Gemini APIへの接続に失敗しました',
+                'response' => $response->json(),
+                'status' => $response->status(),
+                'body' => $response->body(),
+            ], 500);
+        }
+
+        return response()->json($response->json());
+    }
+}
