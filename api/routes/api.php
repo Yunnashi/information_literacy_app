@@ -16,6 +16,7 @@ Route::prefix('comments')->group(function () {
 
 Route::prefix('news')->group(function () {
     Route::get('/', [NewsController::class, 'index']);
+    Route::get('/{newsId}', [NewsController::class, 'detail']);
 });
 
 Route::prefix('gemini')->group(function () {
