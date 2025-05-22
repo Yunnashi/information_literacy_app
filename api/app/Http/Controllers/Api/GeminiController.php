@@ -69,4 +69,3 @@ class GeminiController extends Controller
         // Gemini APIのレスポンスを返す
         return response()->json($responses);
     }
-}
