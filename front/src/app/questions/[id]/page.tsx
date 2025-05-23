@@ -260,12 +260,15 @@ const QuestionDetailPage = () => {
       </Box>
       {/* AI提案追加 */}
       <Box mb={2}>
-        <Typography variant="subtitle2" fontWeight="bold" mb={1} color="secondary">
+        <Typography
+          variant="subtitle2"
+          fontWeight="bold"
+          mb={1}
+          color="secondary"
+        >
           AI提案
         </Typography>
-        <Typography variant="body2">
-          {question.ai_proposal}
-        </Typography>
+        <Typography variant="body2">{question.ai_proposal}</Typography>
       </Box>
       {/* AIロードマップ */}
       <Box mb={2}>
