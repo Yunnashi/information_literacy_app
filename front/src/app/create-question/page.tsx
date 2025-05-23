@@ -75,10 +75,16 @@ const QuestionPage: React.FC = () => {
 
   const onSubmit = (data: FormInputs) => {
     // 攻撃型・防御型の合計値を計算
-    const offensiveKeys = ["q1","q3","q5","q8","q9","q10","q11","q13"];
-    const defensiveKeys = ["q2","q4","q6","q7","q12","q14","q15","q16"];
-    const offensiveSum = offensiveKeys.reduce((sum, key) => sum + Number(data[key as keyof FormInputs] || 0), 0);
-    const defensiveSum = defensiveKeys.reduce((sum, key) => sum + Number(data[key as keyof FormInputs] || 0), 0);
+    const offensiveKeys = ["q1", "q3", "q5", "q8", "q9", "q10", "q11", "q13"];
+    const defensiveKeys = ["q2", "q4", "q6", "q7", "q12", "q14", "q15", "q16"];
+    const offensiveSum = offensiveKeys.reduce(
+      (sum, key) => sum + Number(data[key as keyof FormInputs] || 0),
+      0,
+    );
+    const defensiveSum = defensiveKeys.reduce(
+      (sum, key) => sum + Number(data[key as keyof FormInputs] || 0),
+      0,
+    );
     let type = "";
     if (offensiveSum > defensiveSum) {
       type = "攻撃型";
@@ -87,7 +93,9 @@ const QuestionPage: React.FC = () => {
     } else {
       type = "同点";
     }
-    alert(`攻撃型合計: ${offensiveSum}\n防御型合計: ${defensiveSum}\nあなたは「${type}」です`);
+    alert(
+      `攻撃型合計: ${offensiveSum}\n防御型合計: ${defensiveSum}\nあなたは「${type}」です`,
+    );
     // ここでAPI送信など
     // alert(JSON.stringify(data, null, 2));
   };
@@ -136,7 +144,7 @@ const QuestionPage: React.FC = () => {
             AIによる性格分析のための質問
           </Typography>
 
-          <Typography variant="subtitle1" sx={{ mb: 1, fontSize: '12px' }}>
+          <Typography variant="subtitle1" sx={{ mb: 1, fontSize: "12px" }}>
             以下の16個の質問に1〜6でお答えください
           </Typography>
           <Paper
@@ -150,29 +158,61 @@ const QuestionPage: React.FC = () => {
               mb: 2,
             }}
           >
-            <Typography variant="subtitle2" sx={{ fontWeight: "bold", mb: 0.5, fontSize: '12px' }}>
+            <Typography
+              variant="subtitle2"
+              sx={{ fontWeight: "bold", mb: 0.5, fontSize: "12px" }}
+            >
               回答の基準
             </Typography>
-            <Stack spacing={0.1} sx={{ alignItems: "flex-start", fontSize: '12px' }}>
-              <Box><span style={{ fontWeight: 600, color: "#1976d2" }}>1:</span> まったくあてはまらない</Box>
-              <Box><span style={{ fontWeight: 600, color: "#1976d2" }}>2:</span> ほとんどあてはまらない</Box>
-              <Box><span style={{ fontWeight: 600, color: "#1976d2" }}>3:</span> あまりあてはまらない</Box>
-              <Box><span style={{ fontWeight: 600, color: "#1976d2" }}>4:</span> どちらともいえない</Box>
-              <Box><span style={{ fontWeight: 600, color: "#1976d2" }}>5:</span> ややあてはまる</Box>
-              <Box><span style={{ fontWeight: 600, color: "#1976d2" }}>6:</span> かなりあてはまる</Box>
-              <Box><span style={{ fontWeight: 600, color: "#1976d2" }}>7:</span> 非常にあてはまる</Box>
+            <Stack
+              spacing={0.1}
+              sx={{ alignItems: "flex-start", fontSize: "12px" }}
+            >
+              <Box>
+                <span style={{ fontWeight: 600, color: "#1976d2" }}>1:</span>{" "}
+                まったくあてはまらない
+              </Box>
+              <Box>
+                <span style={{ fontWeight: 600, color: "#1976d2" }}>2:</span>{" "}
+                ほとんどあてはまらない
+              </Box>
+              <Box>
+                <span style={{ fontWeight: 600, color: "#1976d2" }}>3:</span>{" "}
+                あまりあてはまらない
+              </Box>
+              <Box>
+                <span style={{ fontWeight: 600, color: "#1976d2" }}>4:</span>{" "}
+                どちらともいえない
+              </Box>
+              <Box>
+                <span style={{ fontWeight: 600, color: "#1976d2" }}>5:</span>{" "}
+                ややあてはまる
+              </Box>
+              <Box>
+                <span style={{ fontWeight: 600, color: "#1976d2" }}>6:</span>{" "}
+                かなりあてはまる
+              </Box>
+              <Box>
+                <span style={{ fontWeight: 600, color: "#1976d2" }}>7:</span>{" "}
+                非常にあてはまる
+              </Box>
             </Stack>
           </Paper>
-          <Paper elevation={1} sx={{ p: 1, background: '#fafafa', borderRadius: 2, mb: 2 }}>
+          <Paper
+            elevation={1}
+            sx={{ p: 1, background: "#fafafa", borderRadius: 2, mb: 2 }}
+          >
             <Stack spacing={1}>
               {questions.map((q: string, idx: number) => (
                 <Box key={idx} sx={{ mb: 0.5 }}>
-                  <Typography sx={{ mb: 0.5, fontSize: '12px', fontWeight: 500 }}>{`${idx + 1}. ${q}`}</Typography>
+                  <Typography
+                    sx={{ mb: 0.5, fontSize: "12px", fontWeight: 500 }}
+                  >{`${idx + 1}. ${q}`}</Typography>
                   <FormControl component="fieldset" sx={{ width: "100%" }}>
                     <RadioGroup
                       row
                       aria-label={`q${idx + 1}`}
-                      sx={{ fontSize: '12px' }}
+                      sx={{ fontSize: "12px" }}
                       defaultValue=""
                     >
                       {[1, 2, 3, 4, 5, 6, 7].map((num) => (
@@ -182,17 +222,25 @@ const QuestionPage: React.FC = () => {
                           control={
                             <Radio
                               size="small"
-                              {...register(`q${idx + 1}` as keyof FormInputs, { required: true })}
+                              {...register(`q${idx + 1}` as keyof FormInputs, {
+                                required: true,
+                              })}
                             />
                           }
-                          label={<span style={{ fontSize: '12px' }}>{num}</span>}
+                          label={
+                            <span style={{ fontSize: "12px" }}>{num}</span>
+                          }
                           sx={{ mr: 1 }}
                         />
                       ))}
                     </RadioGroup>
                   </FormControl>
                   {errors[`q${idx + 1}` as keyof typeof errors] && (
-                    <Typography color="error" variant="caption" sx={{ fontSize: '11px' }}>
+                    <Typography
+                      color="error"
+                      variant="caption"
+                      sx={{ fontSize: "11px" }}
+                    >
                       回答を選択してください
                     </Typography>
                   )}

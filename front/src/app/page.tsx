@@ -103,7 +103,7 @@ const HomePage: React.FC = () => {
           <Paper
             key={idx}
             elevation={3}
-            onClick={() => router.push(`/news/${news.id}`)}
+            onClick={() => router.push(`/questions/${news.id}`)}
             sx={{
               padding: 2,
               borderRadius: 2,

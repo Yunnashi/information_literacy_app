@@ -21,7 +21,6 @@ import {
   PolarGrid,
   PolarAngleAxis,
   PolarRadiusAxis,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 
@@ -36,26 +35,36 @@ const sampleQuestionResult = {
   detail:
     "子育てがひと段落し、昔から興味のあったデザイン職に挑戦してみたいと考えています。専業主婦を10年以上していたので、まったくの未経験です。IllustratorやPhotoshopはこれから学ぶ予定ですが、こんな私でも現場で通用するでしょうか？また、実務未経験者が採用されやすい職場にはどんな特徴がありますか？",
   ai_summary:
-    "AIによる回答: デザイン職は未経験からでも挑戦可能ですが、ポートフォリオや実績作りが重要です。柔軟な働き方や協調性が求められる職場も多いので、自分に合ったスタイルを選びましょう。",
+    "あなたの性格はデザインの丁寧な実務に向いていますが、職場選びは安定性と明確な評価制度が鍵になります。",
   ai_keywords: [
     { label: "未経験", value: "未経験" },
     { label: "デザイン職", value: "デザイン職" },
     { label: "ポートフォリオ", value: "ポートフォリオ" },
   ],
   compatibility: {
-    personalityType: "現実志向/環境適応タイプ",
+    personalityType: "あなたは「防御系」",
     personalityDesc:
-      "バランスを考えた働き方を模索しており、状況に応じた最適解を選ぶ柔軟性がある。",
+      "実務能力が必要な仕事で能力を発揮します。複雑なデータを念入りに処理するのがうまいため、慎重さを高く評価してくれるような業界が望ましいでしょう。",
+    personalityDesc2:
+      "適した職業：事務員、技術者、経理係、データアナリスト、弁護士など",
     occupation: "デザイナー",
     items: [
-      { label: "主休性", user: 1, occupation: 4 },
-      { label: "共感力", user: 4, occupation: 4 },
-      { label: "協調性", user: 4, occupation: 4 },
-      { label: "創造性", user: 1, occupation: 4 },
+      { label: "ﾜｰｸﾗｲﾌﾊﾞﾗﾝｽ", occupation: 3, isDestroyer: true },
+      { label: "雇用の安定", occupation: 2, isDestroyer: true },
+      { label: "労働時間", occupation: 2, isDestroyer: true },
+      { label: "ｼﾌﾄﾜｰｸ", occupation: 4, isDestroyer: true },
+      { label: "自由", occupation: 4, isDestroyer: false },
+      { label: "達成", occupation: 3, isDestroyer: false },
+      { label: "明確", occupation: 2, isDestroyer: false },
+      { label: "多様", occupation: 4, isDestroyer: false },
+      { label: "焦点", occupation: 2, isDestroyer: false },
+      { label: "仲間", occupation: 3, isDestroyer: false },
+      { label: "貢献", occupation: 3, isDestroyer: false },
     ],
   },
-  ai_explanation:
-    "あなたは現実志向で協調性が高く、環境に応じた柔軟な選択ができるタイプで、積極的に仕事を重視しつつ、人との関わりやつながりを感じる傾向があります。在宅でのデザイン業務の中でもコミュニケーションや取りまとめがリーダーシップや案件に向いています。生活と仕事のバランスを大切にしながら、信頼と共感を軸に活躍できるスタイルを選ぶとよいでしょう。",
+  ai_explanation: `子育てを終えて新たに挑戦したいという気持ちは非常に前向きで、特に「防御系」の性格は、慎重かつ丁寧な作業が求められるデザインの現場でも一定の強みとなります。たとえば、広告バナーの調整、印刷物の入稿、UIの微調整など、細部への気配りが必要な作業に向いています。
+    一方で、デザイン業界は「自由度」「多様性」「シフトの柔軟さ」が高い分、「雇用の安定性」や「労働時間の明確さ」に欠ける傾向があります。防御系の性格には不安要素になりうるため、実務未経験者を受け入れる体制の整った職場（例：インターン制度・育成重視・明確な評価体制）を選ぶことが重要です。
+    自分の強みである「正確さ」や「粘り強さ」が発揮できる環境で、段階的にスキルと実績を積むことが、成功への近道になります。`,
   ai_tips: [
     "ToDo管理やポモドーロなどを活用し、自律的な時間設計力を磨く",
     "ポートフォリオや実績紹介に力を入れ、安心感・信頼感で勝負するスタイルが合う",
@@ -126,6 +135,11 @@ const QuestionDetailPage = () => {
           </Typography>
         </Box>
       </Box>
+      <Box mb={1}>
+        <Typography variant="subtitle2" fontWeight="bold">
+          質問内容
+        </Typography>
+      </Box>
       <Typography variant="body1" mb={2}>
         {question.detail}
       </Typography>
@@ -157,66 +171,151 @@ const QuestionDetailPage = () => {
         ))}
       </Box>
       {/* 職業との相性分析 */}
-      <Box mb={2} p={2}>
+      <Box mb={2}>
         <Typography variant="subtitle2" fontWeight="bold" mb={1}>
           職業との相性分析
         </Typography>
-        <Box display="flex" alignItems="center" mb={1}>
-          <Avatar sx={{ bgcolor: orange[500], width: 48, height: 48, mr: 2 }}>
-            <PersonSearchIcon sx={{ fontSize: 32 }} />
-          </Avatar>
-          <Box>
-            <Typography variant="body1" fontWeight="bold">
-              性格分析
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {question.compatibility.personalityType}
-            </Typography>
-            <Typography
-              variant="caption"
-              color="text.secondary"
-              sx={{ whiteSpace: "pre-line" }}
-            >
+        {/* 性格分析セクションを枠で囲む */}
+        <Box mb={2} p={1} bgcolor="grey.100" borderRadius={2}>
+          <Box display="flex" alignItems="center" mb={1}>
+            <Avatar sx={{ bgcolor: orange[500], width: 48, height: 48, mr: 2 }}>
+              <PersonSearchIcon sx={{ fontSize: 32 }} />
+            </Avatar>
+            <Box flex={1}>
+              <Typography variant="body1" fontWeight="bold">
+                性格分析
+              </Typography>
+              <Typography variant="body2">
+                {question.compatibility.personalityType}
+              </Typography>
+            </Box>
+          </Box>
+          <Box width="100%" mb={1}>
+            <Typography variant="caption">
               {question.compatibility.personalityDesc}
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              {question.compatibility.personalityDesc2}
             </Typography>
           </Box>
         </Box>
         <Box mt={2}>
           <Typography variant="body2" fontWeight="bold" mb={1}>
-            項目ごとの比較
+            {question.compatibility.occupation}の11タイプの適職評価
           </Typography>
           {/* レーダーチャート表示 */}
-          <ResponsiveContainer width="100%" height={200}>
+          <ResponsiveContainer width="100%" height={300}>
             <RadarChart
               cx="50%"
               cy="50%"
               outerRadius="80%"
               data={question.compatibility.items.map((item) => ({
                 subject: item.label,
-                user: item.user,
                 occupation: item.occupation,
+                isDestroyer: item.isDestroyer,
               }))}
             >
               <PolarGrid />
-              <PolarAngleAxis dataKey="subject" />
+              <PolarAngleAxis
+                dataKey="subject"
+                tick={(props) => {
+                  const { payload, x, y, textAnchor, index } = props;
+                  const item = question.compatibility.items[index];
+                  const color =
+                    item && item.isDestroyer ? "#ff9800" : "#1976d2";
+                  return (
+                    <text
+                      x={x}
+                      y={y}
+                      textAnchor={textAnchor}
+                      fill={color}
+                      fontSize={12}
+                    >
+                      {payload && payload.value}
+                    </text>
+                  );
+                }}
+              />
               <PolarRadiusAxis angle={30} domain={[0, 4]} tickCount={5} />
               <Radar
-                name="あなた"
-                dataKey="user"
-                stroke="#8884d8"
-                fill="#8884d8"
-                fillOpacity={0.6}
-              />
-              <Radar
-                name={question.compatibility.occupation}
+                name=""
                 dataKey="occupation"
                 stroke="#ff9800"
                 fill="#ff9800"
                 fillOpacity={0.3}
               />
-              <Legend />
+              {/* <Legend /> ラベル非表示のため削除 */}
             </RadarChart>
           </ResponsiveContainer>
+          {/* 色分け説明を追加 */}
+          <Box mt={1} mb={1}></Box>
+          {/* 補足説明 */}
+          <Box mt={2}>
+            <Typography variant="caption" color="text.secondary" fontSize={13}>
+              <b>指標補足：</b>
+            </Typography>
+            <Typography
+              variant="caption"
+              fontSize={13}
+              sx={{ display: "flex", alignItems: "center", mb: 0.5 }}
+            >
+              <Box
+                component="span"
+                sx={{
+                  width: 12,
+                  height: 12,
+                  bgcolor: "#ff9800",
+                  borderRadius: "50%",
+                  display: "inline-block",
+                  mr: 1,
+                }}
+              />
+              仕事の幸福を破壊する要素
+            </Typography>
+            <Typography variant="caption" color="text.secondary" mb={2}>
+              <span style={{ display: "block" }}>
+                ・<b>ﾜｰｸﾗｲﾌﾊﾞﾗﾝｽ</b>
+                ：休暇と仕事を切り分けていないと、うつ病や不安障害の発症率が1.7倍ほど上昇し、幸福度は40%ほど下がる
+                <br />・<b>雇用の安定</b>
+                ：不安定な賃金や勤務スケジュール、次の仕事が見つからない不安などでストレスが蓄積する。
+                ただし高度なスキルを持った人はフリーによるメリットを得やすい
+                <br />・<b>労働時間</b>
+                ：長時間労働は脳卒中のリスクをあげる。毎日3時間以上の残業を続けると確実に心身崩壊に向かう
+                <br />・<b>シフトワーク</b>
+                ：体内時計のリズムを破壊し、睡眠の質が低下する。メンタルと体の両方に悪影響をもたらす
+                <br />
+              </span>
+            </Typography>
+            <Typography
+              variant="caption"
+              fontSize={13}
+              sx={{ display: "flex", alignItems: "center" }}
+            >
+              <Box
+                component="span"
+                sx={{
+                  width: 12,
+                  height: 12,
+                  bgcolor: "#1976d2",
+                  borderRadius: "50%",
+                  display: "inline-block",
+                  mr: 1,
+                }}
+              />
+              仕事の幸福につながりやすい要素
+            </Typography>
+            <Typography variant="caption" color="text.secondary">
+              <span style={{ display: "block" }}>
+                ・<b>自由</b>：仕事のコントロール権、裁量権
+                <br />・<b>達成</b>：フィードバックシステムの有無
+                <br />・<b>明確</b>：タスク、ビジョン、評価の明確さ
+                <br />・<b>多様</b>：プロジェクト全体への関与
+                <br />・<b>焦点</b>：モチベーションタイプとの一致度
+                <br />・<b>仲間</b>：ソーシャルサポートの有無
+                <br />・<b>貢献</b>：他人へどれだけ役立っているかが目に見える
+              </span>
+            </Typography>
+          </Box>
         </Box>
       </Box>
       {/* AI解説 */}
