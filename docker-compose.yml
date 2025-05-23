@@ -1,0 +1,57 @@
+services:
+  front:
+    build:
+      context: .
+      dockerfile: docker/front/Dockerfile
+    volumes:
+      - ./front:/app
+    ports:
+      - "3030:3000"
+    environment:
+      - NODE_ENV=development
+    tty: true
+    container_name: info-front
+    networks:
+      - app-network
+
+  api:
+    build:
+      context: .
+      dockerfile: docker/api/Dockerfile
+    volumes:
+      - ./api:/var/www
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=info-db
+      - DB_USERNAME=info-user
+      - DB_PASSWORD=password
+    container_name: info-api
+    networks:
+      - app-network
+
+  db:
+    image: mysql:8.4
+    volumes:
+      - db-data:/var/lib/mysql
+      - ./docker/db/conf.d:/etc/mysql/conf.d
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: info-db
+      MYSQL_USER: info-user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: root
+    container_name: info-db
+    networks:
+      - app-network
+
+volumes:
+  db-data:
+
+networks:
+  app-network:
