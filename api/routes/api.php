@@ -26,3 +26,8 @@ Route::prefix('gemini')->group(function () {
         Route::get('/opinion/{newsId}', [GeminiController::class, 'createNewsOpinion']);
     });
 });
+
+Route::get('/gemini/news-summary/{newsId}', [GeminiController::class, 'getNewsSummary']);
+Route::get('/gemini/news-opinions/{newsId}', [GeminiController::class, 'getNewsOpinions']);
+
+Route::post('/gemini/prompt', [GeminiController::class, 'postPromptToGemini']);
