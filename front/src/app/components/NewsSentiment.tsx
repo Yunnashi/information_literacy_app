@@ -8,10 +8,19 @@ interface NewsSentimentProps {
   sx?: SxProps<Theme>;
 }
 
-const NewsSentiment: React.FC<NewsSentimentProps> = ({ positive, neutral, negative, sx }) => {
+const NewsSentiment: React.FC<NewsSentimentProps> = ({
+  positive,
+  neutral,
+  negative,
+  sx,
+}) => {
   return (
     <Box sx={{ ...sx }}>
-      <Typography variant="body2" component="span" sx={{ marginRight: 2, color: "green" }}>
+      <Typography
+        variant="body2"
+        component="span"
+        sx={{ marginRight: 2, color: "green" }}
+      >
         🟢 肯定: {positive}
       </Typography>
       <Typography variant="body2" component="span" sx={{ marginRight: 2 }}>
