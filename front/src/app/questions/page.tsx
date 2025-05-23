@@ -79,28 +79,28 @@ const QuestionsListPage = () => {
   }, [selectedTag]);
 
   return (
-    <Container maxWidth="md" sx={{ py: 4 }}>
+    <Container maxWidth="md" sx={{ py: 2 }}>
       {/* タグ絞り込みサブタイトル */}
       <Typography variant="subtitle1" fontWeight="bold" mb={1}>
         タグで絞り込む
       </Typography>
       {/* タグ絞り込み */}
       <Box mb={3}>
-        <Stack direction="row" spacing={1} flexWrap="wrap">
+        <Stack direction="row" spacing={1} flexWrap="wrap" rowGap={1}>
           <Chip
             icon={<TagIcon />}
             label="すべて"
+            size="small"
             color={!selectedTag ? "primary" : "default"}
             onClick={() => setSelectedTag(null)}
-            sx={{ mb: 1 }}
           />
           {allTags.map((tag) => (
             <Chip
               key={tag}
               label={tag}
+              size="small"
               color={selectedTag === tag ? "primary" : "default"}
               onClick={() => setSelectedTag(tag)}
-              sx={{ mb: 1 }}
             />
           ))}
         </Stack>
