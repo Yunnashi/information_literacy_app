@@ -18,6 +18,7 @@
 ## 🚀 開発環境セットアップ（ローカル）
 
 frontのディレクトリへ移動する
+
 ```bash
 cd front
 ```
@@ -27,17 +28,17 @@ cd front
 ```bash
 pnpm install
 ```
+
 ※ まだ pnpm を導入していない場合は、npm install -g pnpm でインストールできます。
 
 2. 開発サーバー起動
+
 ```bash
 pnpm dev
 ```
 
 ブラウザで以下にアクセス：
 http://localhost:3000
-
-
 
 ## 以下、デフォルトの説明
 

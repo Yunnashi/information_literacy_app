@@ -1,7 +1,15 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { Container, Typography, Box, Button, Divider, Tab, Tabs } from "@mui/material";
+import {
+  Container,
+  Typography,
+  Box,
+  Button,
+  Divider,
+  Tab,
+  Tabs,
+} from "@mui/material";
 import NewsSentiment from "@/app/components/NewsSentiment";
 import CommentSection from "@/app/components/CommentSection";
 import { useState } from "react";
@@ -59,7 +67,9 @@ const NewsDetailPage: React.FC = () => {
   // ID に基づいてニュースを検索
   const news = sampleNews.find((item) => item.id === Number(id));
 
-  const [selectedViewpoint, setSelectedViewpoint] = useState<ViewpointType>(ViewpointType.Positive);
+  const [selectedViewpoint, setSelectedViewpoint] = useState<ViewpointType>(
+    ViewpointType.Positive,
+  );
 
   if (!news) {
     return (
@@ -70,9 +80,7 @@ const NewsDetailPage: React.FC = () => {
           textAlign: "center",
         }}
       >
-        <Typography variant="h6">
-          ニュースが見つかりません。
-        </Typography>
+        <Typography variant="h6">ニュースが見つかりません。</Typography>
       </Container>
     );
   }
