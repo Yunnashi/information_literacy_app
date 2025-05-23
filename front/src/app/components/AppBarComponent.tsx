@@ -15,6 +15,7 @@ const AppBarComponent = () => {
   const getPageTitle = () => {
     if (pathname === "/create-question") return "質問する";
     if (pathname.startsWith("/news/")) return "ニュース詳細";
+    if (pathname.startsWith("/questions/")) return "質問詳細";
     // 必要に応じて他のパスを追加
     return "Page";
   };

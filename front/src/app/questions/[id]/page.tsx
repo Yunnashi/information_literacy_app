@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import CommentSection from "@/app/components/CommentSection";
 import {
   Container,
@@ -66,9 +67,34 @@ const sampleQuestionResult = {
     一方で、デザイン業界は「自由度」「多様性」「シフトの柔軟さ」が高い分、「雇用の安定性」や「労働時間の明確さ」に欠ける傾向があります。防御系の性格には不安要素になりうるため、実務未経験者を受け入れる体制の整った職場（例：インターン制度・育成重視・明確な評価体制）を選ぶことが重要です。
     自分の強みである「正確さ」や「粘り強さ」が発揮できる環境で、段階的にスキルと実績を積むことが、成功への近道になります。`,
   ai_tips: [
-    "ToDo管理やポモドーロなどを活用し、自律的な時間設計力を磨く",
-    "ポートフォリオや実績紹介に力を入れ、安心感・信頼感で勝負するスタイルが合う",
-    "CanvaやFigmaなどのツールからスタートすると、技術より発想力や提案力を伸ばしやすい",
+    {
+      title: "基礎学習（1〜2ヶ月）",
+      tips: [
+        "Illustrator／Photoshopの基本操作をUdemyやYouTubeで学ぶ",
+        "CanvaやFigmaで簡単なアウトプットに挑戦",
+      ],
+    },
+    {
+      title: "模擬制作と実績作り（3〜6ヶ月）",
+      tips: [
+        "NotionやBehanceでポートフォリオサイトを作成",
+        "架空案件に取り組み「自分の色」を表現",
+      ],
+    },
+    {
+      title: "現場経験獲得（6〜12ヶ月）",
+      tips: [
+        "クラウドワークスやココナラで小さな案件を受注",
+        "スクールの就職サポートやインターン制度を活用",
+      ],
+    },
+    {
+      title: "職場選びと長期的スキル形成",
+      tips: [
+        "育成体制のあるデザイン事務所や制作会社へ応募",
+        "その後、UI/UXやWebデザイン、DTPなど専門性を拡張",
+      ],
+    },
   ],
   resources: [
     {
@@ -330,13 +356,23 @@ const QuestionDetailPage = () => {
         <Typography variant="subtitle2" fontWeight="bold" mb={1}>
           今後の成長のヒント
         </Typography>
-        <ul style={{ margin: 0, paddingLeft: 20 }}>
-          {question.ai_tips.map((tip, i) => (
-            <li key={i}>
-              <Typography variant="body2">{tip}</Typography>
-            </li>
+        <Box mb={2} p={1} bgcolor="grey.100" borderRadius={2}>
+          {question.ai_tips.map((step, idx) => (
+            <React.Fragment key={idx}>
+                <Typography variant="body1" fontWeight="bold" color="primary.main">
+                  {step.title}
+                </Typography>
+                <Typography variant="body2" mt={0.5} mb={1}>
+                  {step.tips.map((tip, i) => (
+                    <React.Fragment key={i}>
+                      ・{tip}
+                      <br />
+                    </React.Fragment>
+                  ))}
+                </Typography>
+            </React.Fragment>
           ))}
-        </ul>
+        </Box>
       </Box>
       {/* おすすめリソース */}
       <Box mb={2}>
@@ -383,6 +419,8 @@ const QuestionDetailPage = () => {
       {/* コメント */}
       <Divider sx={{ my: 2 }} />
       <CommentSection comments={question.comments} />
+
+        <Box sx={{ height: "40px" }} />
       {/* 意見追加ボタン */}
       <Button
         variant="contained"

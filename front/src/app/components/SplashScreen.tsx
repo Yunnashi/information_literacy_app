@@ -120,11 +120,10 @@ const SplashScreen: React.FC = () => {
             fontWeight: 500,
             maxWidth: 420,
             textShadow: "0 2px 12px rgba(0,0,0,0.06)",
-            whiteSpace: "pre-line"
+            whiteSpace: "pre-line",
           }}
         >
-          {
-          `われわれは皆、自分の殻に閉じこもり、
+          {`われわれは皆、自分の殻に閉じこもり、
           自分の鼻先くらいの短い視野しかもっておりません`}
         </Typography>
         <Typography
