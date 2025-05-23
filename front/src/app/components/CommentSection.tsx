@@ -1,9 +1,8 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Chip } from "@mui/material";
 
 interface Comment {
   author: string;
   content: string;
-  likes: number;
   date: string;
 }
 
@@ -14,22 +13,52 @@ interface CommentSectionProps {
 const CommentSection: React.FC<CommentSectionProps> = ({ comments }) => {
   return (
     <>
-      <Typography variant="h6" fontWeight="bold" gutterBottom>
-        コメント
-      </Typography>
-      {comments.map((comment, index) => (
-        <Box key={index} sx={{ marginBottom: 2 }}>
-          <Typography variant="subtitle1" fontWeight="bold">
-            {comment.author}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" gutterBottom>
-            {comment.content}
-          </Typography>
-          <Typography variant="body2" color="textSecondary">
-            👍 {comment.likes} ・ {comment.date}
-          </Typography>
-        </Box>
-      ))}
+      <Box mb={2}>
+        <Typography variant="subtitle2" fontWeight="bold" mb={1}>
+          コメント
+        </Typography>
+        {comments.map((c, i) => {
+          let chipColor:
+            | "primary"
+            | "success"
+            | "warning"
+            | "error"
+            | "default"
+            | undefined = undefined;
+          switch (c.date) {
+            case "肯定的":
+              chipColor = "success";
+              break;
+            case "中立的":
+              chipColor = "warning";
+              break;
+            case "否定的":
+              chipColor = "default";
+              break;
+            default:
+              chipColor = undefined;
+          }
+          return (
+            <Box key={i} mb={1}>
+              <Typography variant="body2" fontWeight="bold">
+                {c.author}
+              </Typography>
+              <Box display="flex" alignItems="center" mb={0.5}>
+                <Typography variant="caption" color="text.secondary" mr={1}>
+                  AI判定:
+                </Typography>
+                <Chip
+                  label={c.date}
+                  size="small"
+                  color={chipColor}
+                  variant="outlined"
+                />
+              </Box>
+              <Typography variant="body2">{c.content}</Typography>
+            </Box>
+          );
+        })}
+      </Box>
     </>
   );
 };
