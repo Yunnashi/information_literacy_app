@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Container, Typography, Stack, Paper, Button } from "@mui/material";
 import NewsSentiment from "./components/NewsSentiment";
-import SplashScreen from "./components/SplashScreen";
 
 const sampleNews = {
   ワクチン: [
@@ -59,22 +58,6 @@ const HomePage: React.FC = () => {
   const router = useRouter();
   const [selectedTopic, setSelectedTopic] =
     useState<keyof typeof sampleNews>("ワクチン");
-  const [showSplash, setShowSplash] = useState(false);
-
-  React.useEffect(() => {
-    // localStorageでスプラッシュ表示済みか確認
-    const splashShown = localStorage.getItem("splash_shown");
-    if (!splashShown) {
-      setShowSplash(true);
-      const timer = setTimeout(() => {
-        setShowSplash(false);
-        localStorage.setItem("splash_shown", "true");
-      }, 2200); // 2.2秒表示
-      return () => clearTimeout(timer);
-    }
-  }, []);
-
-  if (showSplash) return <SplashScreen />;
 
   return (
     <Container maxWidth="md" style={{ padding: "20px" }}>

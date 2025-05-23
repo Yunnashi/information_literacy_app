@@ -13,6 +13,10 @@ import {
   CardContent,
   Chip,
   Grid,
+  List,
+  ListItem,
+  ListItemText,
+  ListSubheader,
 } from "@mui/material";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import { orange } from "@mui/material/colors";
@@ -280,67 +284,151 @@ const QuestionDetailPage = () => {
             <Typography variant="caption" color="text.secondary" fontSize={13}>
               <b>指標補足：</b>
             </Typography>
-            <Typography
-              variant="caption"
-              fontSize={13}
-              sx={{ display: "flex", alignItems: "center", mb: 0.5 }}
+            {/* 仕事の幸福を破壊する要素 */}
+            <List
+              subheader={
+                <ListSubheader component="div" disableSticky sx={{ display: 'flex', alignItems: 'center', bgcolor: 'inherit', pl: 0 }}>
+                  <Box
+                    component="span"
+                    sx={{
+                      width: 12,
+                      height: 12,
+                      bgcolor: "#ff9800",
+                      borderRadius: "50%",
+                      display: "inline-block",
+                      mr: 1,
+                    }}
+                  />
+                  <Typography variant="subtitle2" fontWeight="bold" fontSize={14}>
+                    仕事の幸福を破壊する要素
+                  </Typography>
+                </ListSubheader>
+              }
+              sx={{ mb: 2, mt: 1, pl: 3, bgcolor: 'inherit' }}
             >
-              <Box
-                component="span"
-                sx={{
-                  width: 12,
-                  height: 12,
-                  bgcolor: "#ff9800",
-                  borderRadius: "50%",
-                  display: "inline-block",
-                  mr: 1,
-                }}
-              />
-              仕事の幸福を破壊する要素
-            </Typography>
-            <Typography variant="caption" color="text.secondary" mb={2}>
-              <span style={{ display: "block" }}>
-                ・<b>ﾜｰｸﾗｲﾌﾊﾞﾗﾝｽ</b>
-                ：休暇と仕事を切り分けていないと、うつ病や不安障害の発症率が1.7倍ほど上昇し、幸福度は40%ほど下がる
-                <br />・<b>雇用の安定</b>
-                ：不安定な賃金や勤務スケジュール、次の仕事が見つからない不安などでストレスが蓄積する。
-                ただし高度なスキルを持った人はフリーによるメリットを得やすい
-                <br />・<b>労働時間</b>
-                ：長時間労働は脳卒中のリスクをあげる。毎日3時間以上の残業を続けると確実に心身崩壊に向かう
-                <br />・<b>シフトワーク</b>
-                ：体内時計のリズムを破壊し、睡眠の質が低下する。メンタルと体の両方に悪影響をもたらす
-                <br />
-              </span>
-            </Typography>
-            <Typography
-              variant="caption"
-              fontSize={13}
-              sx={{ display: "flex", alignItems: "center" }}
+              <ListItem disablePadding>
+                <ListItemText
+                  primary={
+                    <Typography variant="caption">
+                      <b>ワークラウフバランス</b>：休暇と仕事を切り分けていないと、うつ病や不安障害の発症率が1.7倍ほど上昇し、幸福度は40%ほど下がる
+                    </Typography>
+                  }
+                />
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemText
+                  primary={
+                    <Typography variant="caption">
+                      <b>雇用の安定</b>：不安定な賃金や勤務スケジュール、次の仕事が見つからない不安などでストレスが蓄積する。ただし高度なスキルを持った人はフリーによるメリットを得やすい
+                    </Typography>
+                  }
+                />
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemText
+                  primary={
+                    <Typography variant="caption">
+                      <b>労働時間</b>：長時間労働は脳卒中のリスクをあげる。毎日3時間以上の残業を続けると確実に心身崩壊に向かう
+                    </Typography>
+                  }
+                />
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemText
+                  primary={
+                    <Typography variant="caption">
+                      <b>シフトワーク</b>：体内時計のリズムを破壊し、睡眠の質が低下する。メンタルと体の両方に悪影響をもたらす
+                    </Typography>
+                  }
+                />
+              </ListItem>
+            </List>
+            {/* 仕事の幸福につながりやすい要素 */}
+            <List
+              subheader={
+                <ListSubheader component="div" disableSticky sx={{ display: 'flex', alignItems: 'center', bgcolor: 'inherit', pl: 0 }}>
+                  <Box
+                    component="span"
+                    sx={{
+                      width: 12,
+                      height: 12,
+                      bgcolor: "#1976d2",
+                      borderRadius: "50%",
+                      display: "inline-block",
+                      mr: 1,
+                    }}
+                  />
+                  <Typography variant="subtitle2" fontWeight="bold" fontSize={14}>
+                    仕事の幸福につながりやすい要素
+                  </Typography>
+                </ListSubheader>
+              }
+              sx={{ mb: 0, mt: 1, pl: 3, bgcolor: 'inherit' }}
             >
-              <Box
-                component="span"
-                sx={{
-                  width: 12,
-                  height: 12,
-                  bgcolor: "#1976d2",
-                  borderRadius: "50%",
-                  display: "inline-block",
-                  mr: 1,
-                }}
-              />
-              仕事の幸福につながりやすい要素
-            </Typography>
-            <Typography variant="caption" color="text.secondary">
-              <span style={{ display: "block" }}>
-                ・<b>自由</b>：仕事のコントロール権、裁量権
-                <br />・<b>達成</b>：フィードバックシステムの有無
-                <br />・<b>明確</b>：タスク、ビジョン、評価の明確さ
-                <br />・<b>多様</b>：プロジェクト全体への関与
-                <br />・<b>焦点</b>：モチベーションタイプとの一致度
-                <br />・<b>仲間</b>：ソーシャルサポートの有無
-                <br />・<b>貢献</b>：他人へどれだけ役立っているかが目に見える
-              </span>
-            </Typography>
+              <ListItem disablePadding>
+                <ListItemText
+                  primary={
+                    <Typography variant="caption">
+                      <b>自由</b>：仕事のコントロール権、裁量権
+                    </Typography>
+                  }
+                />
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemText
+                  primary={
+                    <Typography variant="caption">
+                      <b>達成</b>：フィードバックシステムの有無
+                    </Typography>
+                  }
+                />
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemText
+                  primary={
+                    <Typography variant="caption">
+                      <b>明確</b>：タスク、ビジョン、評価の明確さ
+                    </Typography>
+                  }
+                />
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemText
+                  primary={
+                    <Typography variant="caption">
+                      <b>多様</b>：プロジェクト全体への関与
+                    </Typography>
+                  }
+                />
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemText
+                  primary={
+                    <Typography variant="caption">
+                      <b>焦点</b>：モチベーションタイプとの一致度
+                    </Typography>
+                  }
+                />
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemText
+                  primary={
+                    <Typography variant="caption">
+                      <b>仲間</b>：ソーシャルサポートの有無
+                    </Typography>
+                  }
+                />
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemText
+                  primary={
+                    <Typography variant="caption">
+                      <b>貢献</b>：他人へどれだけ役立っているかが目に見える
+                    </Typography>
+                  }
+                />
+              </ListItem>
+            </List>
           </Box>
         </Box>
       </Box>
@@ -359,17 +447,21 @@ const QuestionDetailPage = () => {
         <Box mb={2} p={1} bgcolor="grey.100" borderRadius={2}>
           {question.ai_tips.map((step, idx) => (
             <React.Fragment key={idx}>
-                <Typography variant="body1" fontWeight="bold" color="primary.main">
-                  {step.title}
-                </Typography>
-                <Typography variant="body2" mt={0.5} mb={1}>
-                  {step.tips.map((tip, i) => (
-                    <React.Fragment key={i}>
-                      ・{tip}
-                      <br />
-                    </React.Fragment>
-                  ))}
-                </Typography>
+              <Typography
+                variant="subtitle2"
+                fontWeight="bold"
+                color="primary.main"
+              >
+                {step.title}
+              </Typography>
+              <Typography variant="body2" mt={0.5} mb={1}>
+                {step.tips.map((tip, i) => (
+                  <React.Fragment key={i}>
+                    ・{tip}
+                    <br />
+                  </React.Fragment>
+                ))}
+              </Typography>
             </React.Fragment>
           ))}
         </Box>
@@ -420,7 +512,7 @@ const QuestionDetailPage = () => {
       <Divider sx={{ my: 2 }} />
       <CommentSection comments={question.comments} />
 
-        <Box sx={{ height: "40px" }} />
+      <Box sx={{ height: "40px" }} />
       {/* 意見追加ボタン */}
       <Button
         variant="contained"
