@@ -3,96 +3,63 @@
 import { useParams } from "next/navigation";
 import { Container, Typography, Box, Button, Divider, Tab, Tabs } from "@mui/material";
 import NewsSentiment from "@/app/components/NewsSentiment";
+import CommentSection from "@/app/components/CommentSection";
 import { useState } from "react";
+import { News, ViewpointType } from "@/app/models/news";
 
-const sampleNews = {
-  ワクチン: [
-    {
-      id: 1,
-      date: "2025年5月2日",
-      title: "コロナワクチン第5世代、高齢者への優先接種開始",
-      content:
-      "このワクチンの開発は通常より短期間で行われ、長期的な安全性データが不足しています。一部の人々に重篤な副反応が報告されており、特定の持病を持つ人々への影響は十分に研究されていません。リスクとベネフィットの評価が不十分です。",
-      neutral: 12,
-      positive: 8,
-      negative: 4,
-    },
-    {
-      id: 2,
-      date: "2025年4月30日",
-      title: "ワクチン接種率、都市部と地方の格差が拡大傾向に",
-      content: "",
-      neutral: 7,
-      positive: 3,
-      negative: 9,
-    },
-    {
-      id: 3,
-      date: "2025年4月28日",
-      title: "新型インフルワクチン、来月より一般供給へ",
-      content: "",
-      neutral: 15,
-      positive: 11,
-      negative: 2,
-    },
-  ],
-  同性婚: [
-    {
-      id: 4,
-      date: "2025年5月1日",
-      title: "同性婚法案、国会での議論が本格化",
-      content: "",
-      neutral: 10,
-      positive: 12,
-      negative: 3,
-    },
-  ],
-  経済政策: [
-    {
-      id: 5,
-      date: "2025年4月25日",
-      title: "新しい経済政策、地方経済への影響は？",
-      content: "",
-      neutral: 8,
-      positive: 5,
-      negative: 7,
-    },
-  ],
-};
-
-const sampleComments = [
+const sampleNews: News[] = [
   {
-    author: "医療倫理研究者",
-    content:
-      "インフォームドコンセントの観点から、リスクについてもっと明確に説明すべきです。不確実性を隠すべきではありません。",
-    likes: 32,
-    date: "3日前",
-  },
-  {
-    author: "免疫学研究者",
-    content:
-      "特定の遺伝的背景を持つ集団での試験データが少なすぎます。より多様な集団での検証が必要です。",
-    likes: 27,
-    date: "4日前",
+    id: 1,
+    category: 0, // ワクチン
+    date: "2025年5月2日",
+    title: "コロナワクチン第5世代、高齢者への優先接種開始",
+    detail: "詳細なニュース内容はここに表示されます。",
+    neutral_number: 12,
+    positive_number: 8,
+    negative_number: 4,
+    details: {
+      positive: {
+        content: "肯定的な視点",
+        link: "",
+        comments: [],
+      },
+      neutral: {
+        content: "中立的な視点",
+        link: "",
+        comments: [],
+      },
+      negative: {
+        content:
+          "このワクチンの開発は通常より短期間で行われ、長期的な安全性データが不足しています。一部の人々に重篤な副反応が報告されており、特定の持病を持つ人々への影響は十分に研究されていません。リスクとベネフィットの評価が不十分です。",
+        link: "",
+        comments: [
+          {
+            author: "医療倫理研究者",
+            content:
+              "インフォームドコンセントの観点から、リスクについてもっと明確に説明すべきです。不確実性を隠すべきではありません。",
+            likes: 32,
+            date: "3日前",
+          },
+          {
+            author: "免疫学研究者",
+            content:
+              "特定の遺伝的背景を持つ集団での試験データが少なすぎます。より多様な集団での検証が必要です。",
+            likes: 27,
+            date: "4日前",
+          },
+        ],
+      },
+    },
   },
 ];
-
-// 視点の種類を enum で定義
-enum ViewType {
-  Positive = "positive",
-  Neutral = "neutral",
-  Negative = "negative",
-}
 
 const NewsDetailPage: React.FC = () => {
   const { id } = useParams();
 
   // ID に基づいてニュースを検索
-  const news = Object.values(sampleNews)
-    .flat()
-    .find((item) => item.id === Number(id));
+  const news = sampleNews.find((item) => item.id === Number(id));
 
-    const [selectedView, setSelectedView] = useState<ViewType>(ViewType.Positive);
+  const [selectedViewpoint, setSelectedViewpoint] = useState<ViewpointType>(ViewpointType.Positive);
 
   if (!news) {
     return (
@@ -103,7 +70,7 @@ const NewsDetailPage: React.FC = () => {
           textAlign: "center",
         }}
       >
-        <Typography variant="h6" >
+        <Typography variant="h6">
           ニュースが見つかりません。
         </Typography>
       </Container>
@@ -119,20 +86,20 @@ const NewsDetailPage: React.FC = () => {
         {news.date}
       </Typography>
       <Typography variant="body1" sx={{ marginTop: 2 }}>
-        詳細なニュース内容はここに表示されます。
+        {news.detail}
       </Typography>
       <NewsSentiment
-        positive={news.positive}
-        neutral={news.neutral}
-        negative={news.negative}
+        positive={news.positive_number}
+        neutral={news.neutral_number}
+        negative={news.negative_number}
         sx={{ marginTop: 1 }}
       />
 
       {/* 視点タブ */}
       <Box sx={{ marginTop: 3, marginBottom: 2 }}>
         <Tabs
-          value={selectedView}
-          onChange={(event, newValue) => setSelectedView(newValue)}
+          value={selectedViewpoint}
+          onChange={(event, newValue) => setSelectedViewpoint(newValue)}
           centered
           indicatorColor="primary"
           textColor="inherit"
@@ -140,7 +107,7 @@ const NewsDetailPage: React.FC = () => {
         >
           <Tab
             label="👍 肯定的視点"
-            value={ViewType.Positive}
+            value={ViewpointType.Positive}
             sx={{
               color: "orange",
               textTransform: "none",
@@ -149,7 +116,7 @@ const NewsDetailPage: React.FC = () => {
           />
           <Tab
             label="💬 中立的視点"
-            value={ViewType.Neutral}
+            value={ViewpointType.Neutral}
             sx={{
               color: "blue",
               textTransform: "none",
@@ -158,7 +125,7 @@ const NewsDetailPage: React.FC = () => {
           />
           <Tab
             label="⚠️ 否定的視点"
-            value={ViewType.Negative}
+            value={ViewpointType.Negative}
             sx={{
               color: "red",
               textTransform: "none",
@@ -177,7 +144,9 @@ const NewsDetailPage: React.FC = () => {
           marginBottom: 2,
         }}
       >
-        <Typography variant="body1">{news.content}</Typography>
+        <Typography variant="body1">
+          {news.details[selectedViewpoint].content}
+        </Typography>
       </Box>
 
       {/* リンクボタン */}
@@ -195,22 +164,8 @@ const NewsDetailPage: React.FC = () => {
       <Divider sx={{ marginY: 2 }} />
 
       {/* コメントセクション */}
-      <Typography variant="h6" fontWeight="bold" gutterBottom>
-        コメント
-      </Typography>
-      {sampleComments.map((comment, index) => (
-        <Box key={index} sx={{ marginBottom: 2 }}>
-          <Typography variant="subtitle1" fontWeight="bold">
-            {comment.author}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" gutterBottom>
-            {comment.content}
-          </Typography>
-          <Typography variant="body2" color="textSecondary">
-            👍 {comment.likes} ・ {comment.date}
-          </Typography>
-        </Box>
-      ))}
+      <CommentSection comments={news.details[selectedViewpoint].comments} />
+
       <Box sx={{ height: "40px" }} />
 
       {/* 意見追加ボタン */}
