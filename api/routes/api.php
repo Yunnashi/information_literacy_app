@@ -15,6 +15,7 @@ Route::prefix('comments')->group(function () {
 
 Route::prefix('news')->group(function () {
     Route::get('/', [NewsController::class, 'index']);
+    Route::get('/{newsId}', [NewsController::class, 'detail']);
 });
 
 Route::prefix('gemini')->group(function () {
@@ -25,3 +26,8 @@ Route::prefix('gemini')->group(function () {
         Route::get('/opinion/{newsId}', [GeminiController::class, 'createNewsOpinion']);
     });
 });
+
+Route::get('/gemini/news-summary/{newsId}', [GeminiController::class, 'getNewsSummary']);
+Route::get('/gemini/news-opinions/{newsId}', [GeminiController::class, 'getNewsOpinions']);
+
+Route::post('/gemini/prompt', [GeminiController::class, 'postPromptToGemini']);
