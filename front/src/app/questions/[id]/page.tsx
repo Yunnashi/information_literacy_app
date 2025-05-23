@@ -9,10 +9,7 @@ import {
   Button,
   Divider,
   Avatar,
-  Card,
-  CardContent,
   Chip,
-  Grid,
 } from "@mui/material";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import { orange } from "@mui/material/colors";
@@ -64,9 +61,8 @@ const sampleQuestionResult = {
       { label: "貢献", occupation: 3, isDestroyer: false },
     ],
   },
-  ai_explanation: `子育てを終えて新たに挑戦したいという気持ちは非常に前向きで、特に「防御系」の性格は、慎重かつ丁寧な作業が求められるデザインの現場でも一定の強みとなります。たとえば、広告バナーの調整、印刷物の入稿、UIの微調整など、細部への気配りが必要な作業に向いています。
-    一方で、デザイン業界は「自由度」「多様性」「シフトの柔軟さ」が高い分、「雇用の安定性」や「労働時間の明確さ」に欠ける傾向があります。防御系の性格には不安要素になりうるため、実務未経験者を受け入れる体制の整った職場（例：インターン制度・育成重視・明確な評価体制）を選ぶことが重要です。
-    自分の強みである「正確さ」や「粘り強さ」が発揮できる環境で、段階的にスキルと実績を積むことが、成功への近道になります。`,
+  ai_explanation: `デザイナーは創造性や自由度の高い職種であり、「自由」や「多様」といった指標では高得点です。一方で、雇用の安定性やタスクの明確さには欠ける場面が多く、防御型の人にとっては不安要素となりやすいです。また、仕事の成果が曖昧であることもあり、評価や達成感が得づらい傾向にあります。焦点（防御型）との一致度も低めで、変化や曖昧さへの耐性が必要なため、完全にフィットするとは言いがたい職業です。`,
+  ai_proposal: `防御型の人にとって「安定」「明確な評価」「長期的な雇用」が鍵ですが、デザイナー職はフリーランスや契約職も多く、評価基準が曖昧なケースも多いです。よって、安定性や明確な指針を重視する防御型にはミスマッチの可能性があります。組織内の「インハウスデザイナー」や「広報・制作管理」など、より安定性のある環境を選ぶことで適性を高めることが可能です。`,
   ai_tips: [
     {
       title: "基礎学習（1〜2ヶ月）",
@@ -95,28 +91,6 @@ const sampleQuestionResult = {
         "育成体制のあるデザイン事務所や制作会社へ応募",
         "その後、UI/UXやWebデザイン、DTPなど専門性を拡張",
       ],
-    },
-  ],
-  resources: [
-    {
-      title: "キャリアガイド本",
-      description: "仕事に役立つ知識が満載の新刊",
-      link: "#",
-    },
-    {
-      title: "オンラインコース",
-      description: "スキルを磨いてキャリアアップ",
-      link: "#",
-    },
-    {
-      title: "キャリアに役立つ書籍",
-      description: "仕事に役立つ知識",
-      link: "#",
-    },
-    {
-      title: "プログラミングコース",
-      description: "スキルを磨いてキャリアアップ",
-      link: "#",
     },
   ],
   related_questions: [
@@ -271,11 +245,8 @@ const QuestionDetailPage = () => {
                 fill="#ff9800"
                 fillOpacity={0.3}
               />
-              {/* <Legend /> ラベル非表示のため削除 */}
             </RadarChart>
           </ResponsiveContainer>
-          {/* 色分け説明を追加 */}
-          <Box mt={1} mb={1}></Box>
           {/* 補足説明 */}
           <IndicatorSupplement />
         </Box>
@@ -286,6 +257,15 @@ const QuestionDetailPage = () => {
           解説
         </Typography>
         <Typography variant="body2">{question.ai_explanation}</Typography>
+      </Box>
+      {/* AI提案追加 */}
+      <Box mb={2}>
+        <Typography variant="subtitle2" fontWeight="bold" mb={1} color="secondary">
+          AI提案
+        </Typography>
+        <Typography variant="body2">
+          {question.ai_proposal}
+        </Typography>
       </Box>
       {/* AIロードマップ */}
       <Box mb={2}>
@@ -313,28 +293,6 @@ const QuestionDetailPage = () => {
             </React.Fragment>
           ))}
         </Box>
-      </Box>
-      {/* おすすめリソース */}
-      <Box mb={2}>
-        <Typography variant="subtitle2" fontWeight="bold" mb={1}>
-          おすすめのリソース
-        </Typography>
-        <Grid container spacing={2}>
-          {question.resources.map((res, i) => (
-            <Grid key={i} size={{ xs: 6 }}>
-              <Card variant="outlined" sx={{ height: "100%" }}>
-                <CardContent>
-                  <Typography variant="body2" fontWeight="bold">
-                    {res.title}
-                  </Typography>
-                  <Typography variant="caption" color="text.secondary">
-                    {res.description}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
       </Box>
       {/* 関連質問 */}
       <Box mb={2}>
