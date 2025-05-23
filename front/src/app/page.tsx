@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Container, Typography, Stack, Paper, Button } from "@mui/material";
 import NewsSentiment from "./components/NewsSentiment";
+import SplashScreen from "./components/SplashScreen";
 
 const sampleNews = {
   ワクチン: [
@@ -56,7 +57,24 @@ const sampleNews = {
 
 const HomePage: React.FC = () => {
   const router = useRouter();
-  const [selectedTopic, setSelectedTopic] = useState<keyof typeof sampleNews>("ワクチン");
+  const [selectedTopic, setSelectedTopic] =
+    useState<keyof typeof sampleNews>("ワクチン");
+  const [showSplash, setShowSplash] = useState(false);
+
+  React.useEffect(() => {
+    // localStorageでスプラッシュ表示済みか確認
+    const splashShown = localStorage.getItem("splash_shown");
+    if (!splashShown) {
+      setShowSplash(true);
+      const timer = setTimeout(() => {
+        setShowSplash(false);
+        localStorage.setItem("splash_shown", "true");
+      }, 2200); // 2.2秒表示
+      return () => clearTimeout(timer);
+    }
+  }, []);
+
+  if (showSplash) return <SplashScreen />;
 
   return (
     <Container maxWidth="md" style={{ padding: "20px" }}>
@@ -109,6 +127,27 @@ const HomePage: React.FC = () => {
           </Paper>
         ))}
       </Stack>
+      {/* 質問ボタン */}
+      <Button
+        variant="contained"
+        size="large"
+        sx={{
+          position: "fixed",
+          bottom: 16,
+          left: "50%",
+          transform: "translateX(-50%)",
+          textTransform: "none",
+          fontWeight: "bold",
+          backgroundColor: "#007bff",
+          color: "#fff",
+          "&:hover": { backgroundColor: "#0056b3" },
+          width: "80%",
+          borderRadius: "8px",
+        }}
+        onClick={() => router.push("/create-question")}
+      >
+        + 職業に関する質問を追加する
+      </Button>
     </Container>
   );
 };
