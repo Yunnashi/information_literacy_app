@@ -11,6 +11,8 @@ Route::prefix('comments')->group(function () {
 
     // コメント数取得
     Route::get('/numbers/{newsId}', [CommentController::class, 'getCommentNumbers']);
+    // AIコメント判定
+    Route::post('/decision', [CommentController::class, 'aiDecision']);
 });
 
 Route::prefix('news')->group(function () {
